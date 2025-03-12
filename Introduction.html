@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Dr Lindokuhle Dlamini" />
+
+<meta name="date" content="2025-03-12" />
+
+<title>Introduction to R and RStudio</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Rhodes University ENV Hons R intro </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Introduction.html">Intro</a>
+</li>
+<li>
+  <a href="Baby_steps.html">Baby steps</a>
+</li>
+<li>
+  <a href="Data_wrangling.html">Data wrangling</a>
+</li>
+<li>
+  <a href="Data_visualisation.html">Data vis</a>
+</li>
+<li>
+  <a href="Statistics_intro.html">Stats intro</a>
+</li>
+<li>
+  <a href="Multivariate.html">Multivariate</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introduction to R and RStudio</h1>
+<h4 class="author"><em>Dr Lindokuhle Dlamini</em></h4>
+<h4 class="date"><em> 12 March 2025</em></h4>
+
+<h2>What is R and RStudio?</h2>
+<p>R is a programming language used for statistical computing and graphics. It is derived from the S language and allows users to perform a wide range of data analysis tasks.</p>
+<p>RStudio is an Integrated Development Environment (IDE) that enhances R by providing an easy-to-use interface for writing and running R code, making the experience more efficient and organized.</p>
+<p>To start using R, you'll first need to install R itself, then install RStudio, which is built on top of R for better usability.</p>
+
+<h2>Why Learn and Use R?</h2>
+<ul>
+    <li><strong>No Pointing and Clicking:</strong> Unlike menu-driven programs, R requires you to write code, helping you better understand the analysis process.</li>
+    <li><strong>Reproducibility:</strong> Scripts can be saved and reused, making analyses easy to reproduce.</li>
+    <li><strong>There’s a Package for That:</strong> R has thousands of free packages for specialized functions.</li>
+    <li><strong>Graphing Capabilities:</strong> R provides powerful graphing tools for publication-quality visualizations.</li>
+    <li><strong>Community Support:</strong> A strong online community provides help and resources.</li>
+    <li><strong>Fast Growth:</strong> R is one of the fastest-growing programming languages.</li>
+</ul>
+
+<h2>Installing R and RStudio</h2>
+<ul>
+    <li><strong>Download R:</strong> Visit <a href="https://cran.r-project.org/">CRAN</a> to download the latest version.</li>
+    <li><strong>Download RStudio:</strong> Visit <a href="https://posit.co/download/rstudio-desktop/">RStudio</a> to install the IDE.</li>
+    <li><strong>Install R First, Then RStudio:</strong> Install R before installing RStudio for better usability.</li>
+</ul>
+
+<h2>RStudio Walkthrough</h2>
+<p>The RStudio IDE is divided into several panels:</p>
+<ul>
+    <li><strong>Script/Viewer Panel:</strong> Write and manage your R code.</li>
+    <li><strong>Environment/History:</strong> Displays stored variables and past commands.</li>
+    <li><strong>Console:</strong> Where code is executed.</li>
+    <li><strong>Files/Plots/Packages/Help:</strong> Manage files, view plots, install packages, and access help.</li>
+</ul>
+
+<h2>Creating Your First R Project</h2>
+<ul>
+    <li>Open RStudio and go to <strong>File > New Project</strong>.</li>
+    <li>Choose <strong>New Directory > New Project</strong>, then name your directory.</li>
+    <li>Save the project in a convenient location.</li>
+    <li>Create subdirectories for raw data, output, figures, and scripts.</li>
+</ul>
+
+<h2>Interacting with R</h2>
+<ul>
+    <li><strong>Console:</strong> Type commands and get immediate results.</li>
+    <li><strong>Scripts:</strong> Write and save multiple commands.</li>
+    <li><strong>Running Code:</strong> Use <code>Ctrl + Enter</code> (or <code>Cmd + Return</code> on Macs) to execute a line.</li>
+</ul>
+
+<h2>Where to Find More Resources</h2>
+<ul>
+    <li><strong>Books:</strong> "R for Data Science" by Hadley Wickham is a great beginner resource.</li>
+    <li><strong>Help:</strong> Use <code>?functionName</code> to get built-in documentation.</li>
+    <li><strong>Online Communities:</strong> Forums like Stack Overflow, RStudio Community, and R Bloggers provide excellent support.</li>
+</ul>
+
+<h2>Getting Help with R</h2>
+<ul>
+    <li><strong>Error Messages:</strong> Copy and paste error messages into Google for solutions.</li>
+    <li><strong>Manuals:</strong> Use <code>?functionName</code> for built-in function documentation.</li>
+    <li><strong>Package Vignettes:</strong> Most R packages include tutorials and examples.</li>
+</ul>
+
+<h2>Author</h2>
+<p><strong>Dr. Lindokuhle Dlamini</strong></p>
+<p><strong>Date:</strong> 2025-03-12</p>
